@@ -1,11 +1,35 @@
-import { defineConfig } from 'vite'
-import react, { reactCompilerPreset } from '@vitejs/plugin-react'
-import babel from '@rolldown/plugin-babel'
+import { defineConfig } from "vite";
+import react, { reactCompilerPreset } from "@vitejs/plugin-react";
+import babel from "@rolldown/plugin-babel";
+import tailwindcss from "@tailwindcss/vite";
+import { resolve, dirname } from "path";
+import { fileURLToPath } from "url";
 
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
     react(),
-    babel({ presets: [reactCompilerPreset()] })
+    tailwindcss(),
+    babel({ presets: [reactCompilerPreset()] }),
   ],
-})
+  resolve: {
+    alias: {
+      "@": resolve(dirname(fileURLToPath(import.meta.url)), "src"),
+      "@components": resolve(
+        dirname(fileURLToPath(import.meta.url)),
+        "src/components",
+      ),
+      "@constants": resolve(
+        dirname(fileURLToPath(import.meta.url)),
+        "src/constants",
+      ),
+      "@types": resolve(dirname(fileURLToPath(import.meta.url)), "src/types"),
+      "@store": resolve(dirname(fileURLToPath(import.meta.url)), "src/store"),
+      "@hoc": resolve(dirname(fileURLToPath(import.meta.url)), "src/hoc"),
+      "@windows": resolve(
+        dirname(fileURLToPath(import.meta.url)),
+        "src/windows",
+      ),
+    },
+  },
+});
